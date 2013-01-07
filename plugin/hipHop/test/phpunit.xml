@@ -1,9 +1,0 @@
-<phpunit verbose="true" colors="false" backupGlobals="false" processIsolation="false">
-	<testsuite name="plugin.">
-		<directory>./*.php</directory>
-		
-	</testsuite>
-	<php>
-		
-	</php>
-</phpunit>
