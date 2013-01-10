@@ -1,0 +1,68 @@
+
+		public function testFileStorage()
+		{
+			$dummyData	=file_get_contents(APP_HOME._DS_.'..'._DS_.'tmp'._DS_.'form2.json');
+			$fileStorage=$this->plugin->Storage('File');
+			$dataBucket	=$fileStorage->bindBucket('data',APP_HOME.'data'._DS_);
+			$dataBucket->setStoragePattern('$accountID/$container/$fileName');
+			$dataBucket->put
+			(
+				array
+				(
+					'accountID'	=>ACCOUNT_ID,
+					'container'	=>'test',
+					'fileName'	=>'form2.json'
+				),
+				$dummyData
+			);
+		}
+		
+		public function testFileStorageCopy()
+		{
+			$this->testFileStorage();
+			$fileStorage=$this->plugin->Storage('File');
+			$dataBucket=$fileStorage->bindBucket('data',APP_HOME.'data'._DS_);
+			$dataBucket->setStoragePattern('$accountID/$container/$fileName');
+			$dataBucket->copy
+			(
+				array
+				(
+					'accountID'	=>ACCOUNT_ID,
+					'container'	=>'test',
+					'fileName'	=>'form2.json'
+				),
+				APP_HOME.'..'._DS_.'tmp'._DS_.'form2Copy.json'
+			);
+		}
+		
+		public function testFileStorageCopy2()
+		{
+			$this->testFileStorage();
+			$fileStorage=$this->plugin->Storage('File');
+			$dataBucket=$fileStorage->bindBucket('data',APP_HOME.'data'._DS_);
+			$dataBucket->setStoragePattern('$accountID');
+			$dataBucket->copy
+			(
+				array
+				(
+					'accountID'	=>ACCOUNT_ID
+				),
+				APP_HOME.'..'._DS_.'tmp'._DS_
+			);
+		}
+		
+		public function testFileStorageMove()
+		{
+			$this->testFileStorage();
+			$fileStorage=$this->plugin->Storage('File');
+			$dataBucket=$fileStorage->bindBucket('data',APP_HOME.'data'._DS_);
+			$dataBucket->setStoragePattern('$accountID');
+			$dataBucket->move
+			(
+				array
+				(
+					'accountID'	=>100
+				),
+				APP_HOME.'..'._DS_.'tmp'._DS_.'test'._DS_
+			);
+		}
