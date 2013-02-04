@@ -226,7 +226,7 @@ namespace nutshell\plugin\mvc\model
 			VALUES
 				({$placeholders});
 SQL;
-die($query);
+
 			return $this->db->insert($query,$record);
 		}
 		
