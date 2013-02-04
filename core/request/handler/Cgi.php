@@ -36,7 +36,7 @@ namespace nutshell\core\request\handler
 		protected function setupData()
 		{
 			$this->data =&$_REQUEST;
-			$this->raw	=&$GLOBALS['HTTP_RAW_POST_DATA'];
+			$this->raw	=file_get_contents('php://input');
 		}
 	}
 }
