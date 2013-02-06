@@ -120,7 +120,10 @@ namespace nutshell\plugin\cache
 							{
 								// it's expired. It's better to remove it!
 								unset($handle);
-								unlink($fileName);
+								if(file_exists($fileName))
+								{
+									unlink($fileName);
+								}
 							}
 						}
 					}
