@@ -56,7 +56,10 @@ namespace nutshell\core\plugin
 		 */
 		public $plugin							= null;
 		
-		abstract public static function getInstance(Array $args=array());
+		public static function getInstance(Array $args=array())
+		{
+
+		}
 		
 		/**
 		 * Class Constructor. Creates plugin shortcuts to commonly
