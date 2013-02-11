@@ -153,7 +153,7 @@ namespace nutshell\core\exception
 		{
 			set_exception_handler('nutshell\core\exception\NutshellException::treatException');
 			self::$oldErrorHandler = set_error_handler('nutshell\core\exception\NutshellException::treatError');
-			self::$echoErrors = (is_defined('NS_ENV') && NS_ENV =='dev')?true:false;
+			self::$echoErrors = (\is_defined('NS_ENV') && NS_ENV =='dev')?true:false;
 		}
 	}
 
