@@ -119,10 +119,10 @@ namespace nutshell\core\loader
 					//Invoke the plugin.
 					require($filePath);
 				}
-				else
-				{
-					throw new LoaderException(LoaderException::CANNOT_AUTOLOAD_CLASS, 'Unable to autoload class "'.$namespace.'\\'.$className.'".');
-				}
+				// else
+				// {
+				// 	throw new LoaderException(LoaderException::CANNOT_AUTOLOAD_CLASS, 'Unable to autoload class "'.$namespace.'\\'.$className.'".');
+				// }
 			}
 		}
 		
