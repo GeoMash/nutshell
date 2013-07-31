@@ -31,8 +31,13 @@ namespace nutshell\core\exception
 		const PHP_FATAL_ERROR			= 2;
 		
 		const INVALID_APP_PATH			= 10;
-		const INVALID_PROPERTY			= 11;
-		const READ_ONLY					= 12;
+		const APP_ALREADY_REGISTERED	= 11;
+		const APP_NOT_REGISTERED		= 12;
+		
+		const INVALID_PROPERTY			= 13;
+		const READ_ONLY					= 14;
+		
+		const INVALID_ROOT_PATH			= 15;
 		
 		/*
 		 * Instance Properties

@@ -30,7 +30,6 @@ namespace nutshell\core
 // 			$this->core			=Nutshell::getInstance();
 // 			$this->plugin		=Nutshell::getInstance()->plugin;
 // 			$this->request		=Nutshell::getInstance()->request;
-			HookManager::execute('core\plugin',ObjectHelper::getBaseClassName($this).'OnConstruct');
 		}
 		
 		/**
