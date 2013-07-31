@@ -12,7 +12,6 @@ namespace nutshell\core\plugin
 	use nutshell\core\exception\PluginException;
 	use nutshell\core\Component;
 	use nutshell\core\config\Config;
-	use nutshell\core\HookManager;
 	use nutshell\helper\ObjectHelper;
 	
 	/**
@@ -69,7 +68,7 @@ namespace nutshell\core\plugin
 		{
 			parent::__construct();
 			$this->core		=Nutshell::getInstance();
-			$this->config	=$this->core->config->plugin->{ObjectHelper::getBaseClassName($this)};
+			$this->config	=$this->nutshell->config->plugin->{ObjectHelper::getBaseClassName($this)};
 			$this->plugin	=Nutshell::getInstance()->plugin;
 			$this->request	=Nutshell::getInstance()->request;
 		}

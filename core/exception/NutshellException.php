@@ -159,11 +159,11 @@ namespace nutshell\core\exception
 				'RAW'
 			);
 
-			$optionsConfig = Nutshell::getInstance()->config->core->exception->details;
-			if(is_array($optionsConfig))
-			{
-				$options = $optionsConfig;
-			}
+			// $optionsConfig = Nutshell::getInstance()->config->core->exception->details;
+			// if(is_array($optionsConfig))
+			// {
+			// 	$options = $optionsConfig;
+			// }
 			
 			$description = array
 			(
@@ -317,14 +317,17 @@ namespace nutshell\core\exception
 				self::logMessage($message);
 				
 				// Echo the message
-				if(Nutshell::getInstance()->config->application->mode=='development')
-				{
-					if(NS_INTERFACE != Nutshell::INTERFACE_CLI)
-					{
-						header('HTTP/1.1 500 Application Error');
-					}
-					echo $message;
-				}
+				// if(Nutshell::getInstance()->config->application->mode=='development')
+				// {
+				// 	if(NS_INTERFACE != Nutshell::INTERFACE_CLI)
+				// 	{
+				// 		header('HTTP/1.1 500 Application Error');
+				// 	}
+				// 	echo $message;
+				// }
+				
+				// header('HTTP/1.1 500 Application Error');
+				echo $message;
 					
 				self::$blockRecursion = false;
 			}

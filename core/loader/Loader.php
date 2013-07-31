@@ -116,8 +116,7 @@ namespace nutshell\core\loader
 				}
 				if (is_file($filePath))
 				{
-					//Invoke the plugin.
-					require($filePath);
+					require_once($filePath);
 				}
 				else
 				{
@@ -164,6 +163,9 @@ namespace nutshell\core\loader
 		
 		private function doLoad($key,Array $args=array())
 		{
+			$dirBaseFolderFile	=null;
+			$dirBaseFile		=null;
+			$dir				=null;
 			//Is the object not loaded?
 			if (!isset($this->loaded[$key]))
 			{
@@ -172,12 +174,11 @@ namespace nutshell\core\loader
 					//No, so we need to load all of it's dependancies and initiate it.
 					$dirBase=$container['path'];
 					$namespaceBase=$container['namespace'];
-					
 					if (is_file($dirBaseFolderFile=$dirBase.lcfirst($key)._DS_.$key.'.php'))
 					{
 						$className = $namespaceBase.lcfirst($key).'\\'.$key;
 						if(!class_exists($className)) {
-							require($dirBaseFolderFile);
+							require_once($dirBaseFolderFile);
 						}
 						$this->classNames[$key] = $className;
 						$this->interfaces[$key] = $this->loadClassDependencies($this->classNames[$key]);
@@ -203,7 +204,6 @@ namespace nutshell\core\loader
 						break;
 					}
 				}// end of foreach
-				
 				if(!isset($this->classNames[$key]))
 				{
 					throw new LoaderException
@@ -246,6 +246,11 @@ namespace nutshell\core\loader
 					.'handle you\'re using to handle the loading with doesn\'t impement the "Loadable" behaviour.'
 				);
 			}
+		}
+		
+		public function isLoaded($key)
+		{
+			return isset($this->loaded[$key]);
 		}
 
 		public function __get($key)

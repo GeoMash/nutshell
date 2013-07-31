@@ -6,6 +6,7 @@ namespace nutshell\core
 {
 	use nutshell\Nutshell;
 	use nutshell\helper\ObjectHelper;
+	use nutshell\core\exception\NutshellException;
 	
 	/**
 	 * This is the base component class which all core
@@ -77,10 +78,12 @@ namespace nutshell\core
 		{
 			switch ($key)
 			{
-				case 'config':	return Nutshell::getInstance()->config;
-				case 'core':	return Nutshell::getInstance();
-				case 'plugin':	return Nutshell::getInstance()->plugin;
-				case 'request':	return Nutshell::getInstance()->request;
+				case 'config':		return Nutshell::getInstance()->config;
+				case 'core':		throw new NutshellException('$this->core is deprecated. Use $this->nutshell instead.');
+				case 'nutshell':	return Nutshell::getInstance();
+				case 'application':	return Nutshell::getInstance()->application;
+				case 'plugin':		return Nutshell::getInstance()->plugin;
+				case 'request':		return Nutshell::getInstance()->request;
 			}
 		}
 	}

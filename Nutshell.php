@@ -17,6 +17,7 @@ namespace nutshell
 	use nutshell\core\config\Framework;
 	use nutshell\core\loader\Loader;
 	use nutshell\core\plugin\Plugin;
+	use nutshell\core\application\Application;
 	use nutshell\core\exception\NutshellException;
 	use nutshell\helper\ObjectHelper;
 	use \stdClass;
@@ -42,14 +43,15 @@ namespace nutshell
 		const INTERFACE_HTTP 		= 	'HTTP';
 		const INTERFACE_PHPUNIT		= 	'PHPUNIT';
 		
+		public $applicationConfig	=	null;
 		public $config 				=	null;
 		public $request				=	null;
 		private $pluginLoader       =   null;
+		private $applicationLoader	=	null;
 		
-		static $rootPath			='';
+		static $defaultConfig		=	null;
 		static $applicationRegistry	=array();
 		
-		public $application			=null;
 		
 		/**
 		 * Configures all special constants and libraries linking.
@@ -83,8 +85,6 @@ namespace nutshell
 			// {
 			// 	define('APP_HOME', APP_HOME.DIRECTORY_SEPARATOR);
 			// }
-			
-			$this->application=new stdClass();
 			
 			if (isset($_SERVER['argc']) && $_SERVER['argc'] > 0)
 			{
@@ -145,14 +145,16 @@ namespace nutshell
 			//Init the request object.
 			$this->request=new Request;
 			
-			//init loader.
-			$this->initLoader();
+			//init loaders.
+			$this->initLoaders();
+			
+			$this->config=Framework::loadConfig(NS_HOME._DS_.Config::CONFIG_FOLDER, NS_ENV);
+			
+			$this->applicationConfig=new stdClass;
+			
 			
 			// // define temporary handlers
 			// NutshellException::setDefaultHandlers();
-			
-			// //Setup Configs for Each Application
-			// $this->setupApplicationConfigs();
 
 			// // define real handlers as defined in the config
 			// NutshellException::setHandlers();
@@ -165,6 +167,7 @@ namespace nutshell
 			
 			
 			//Register the plugin container.
+			$this->applicationLoader->registerContainer('application',APP_HOME,'application\\');
 			// $this->pluginLoader->registerContainer('plugin',NS_HOME.'plugin'._DS_,'nutshell\plugin\\');
 			// $this->pluginLoader->registerContainer('appplugin',APP_HOME.'plugin'._DS_,'application\plugin\\');
 		}
@@ -230,6 +233,9 @@ namespace nutshell
 			require(NS_HOME.'core'._DS_.'config'._DS_.'Config.php');
 			require(NS_HOME.'core'._DS_.'config'._DS_.'Framework.php');
 			require(NS_HOME.'core'._DS_.'loader'._DS_.'Loader.php');
+			require(NS_HOME.'core'._DS_.'exception'._DS_.'LoaderException.php');
+			require(NS_HOME.'core'._DS_.'application'._DS_.'Application.php');
+			require(NS_HOME.'core'._DS_.'exception'._DS_.'ApplicationException.php');
 			require(NS_HOME.'core'._DS_.'plugin'._DS_.'AbstractPlugin.php');
 			require(NS_HOME.'core'._DS_.'plugin'._DS_.'Plugin.php');
 			require(NS_HOME.'core'._DS_.'plugin'._DS_.'LibraryPlugin.php');
@@ -239,6 +245,7 @@ namespace nutshell
 			Request::register();
 			Config::register();
 			Loader::register();
+			Application::register();
 			Plugin::register();
 			
 			return $this;
@@ -254,9 +261,10 @@ namespace nutshell
 		 * @access private
 		 * @return Nutshell
 		 */
-		private function initLoader() 
+		private function initLoaders() 
 		{
 			$this->pluginLoader = new Loader();
+			$this->applicationLoader = new Loader();
 			return $this;
 		}
 		
@@ -304,14 +312,27 @@ namespace nutshell
 		 * @access private
 		 * @return Nutshell
 		 */
-		private function setupApplicationConfigs()
+		public function setupApplicationConfig($application)
 		{
-			for ($i=0,$j=count(self::$applicationRegistry); $i<$j; $i++)
+			$this->applicationConfig->{$application}=Framework::loadConfig(APP_HOME.strtolower($application)._DS_.Config::CONFIG_FOLDER, NS_ENV);
+			if (self::$defaultConfig==$application)
 			{
-				
+				$this->config=$this->applicationConfig->{$application};
 			}
-			$this->config = Framework::loadConfig(APP_HOME . Config::CONFIG_FOLDER, NS_ENV);
-			return $this;
+			return $this->applicationConfig->{$application};
+		}
+		
+		public static function registerDefaultConfig($application)
+		{
+			self::$defaultConfig=$application;
+			if (isset($GLOBALS['NUTSHELL']))
+			{
+				$nutshell=Nutshell::getInstance();
+				if ($nutshell->getApplicationLoader()->isLoaded($application))
+				{
+					$nutshell->config=$nutshell->applicationConfig->{$application};
+				}
+			}
 		}
 		
 		/**
@@ -349,77 +370,16 @@ namespace nutshell
 			define('APP_HOME', $path . DIRECTORY_SEPARATOR);
 		}
 		
-		// public function initApplication($ref,$path)
-		// {
-		// 	require_once($path);
-		// 	$this->application->{$ref}=new $
-		// }
-		
-		
-		/**
-		 * [setRootPath description]
-		 * @param string] $path - Path which nutshell should start looking for applications.
-		 * @return voic
-		 */
-		public static function setRootApplicationNS($path)
+		public static function setApplictionPath($path)
 		{
+			$path=realpath($path);
 			if (is_dir($path))
 			{
-				self::$applicationRegistry[$ref]=$path;
+				define('APP_HOME', $path . DIRECTORY_SEPARATOR);
 			}
 			else
 			{
 				throw new NutshellException(NutshellException::INVALID_ROOT_PATH, 'Invalid root path.');
-			}
-		}
-		
-		/**
-		 * Registers an application and its path in the nutshell application registry.
-		 * 
-		 * @param  string $ref - The application reference.
-		 * @param  string $path - The full path to the application.
-		 * @return void
-		 */
-		public static function registerApplication($ref,$path)
-		{
-			require_once($path);
-			
-			
-			print_r(ObjectHelper::getBaseClassName($path));
-			exit();
-			// self::getInstance()
-			// 
-			if (!isset(self::$applicationRegistry[$ref]))
-			{
-				if (is_dir($path))
-				{
-					self::$applicationRegistry[$ref]=$path;
-				}
-				else
-				{
-					throw new NutshellException(NutshellException::INVALID_APP_PATH, 'Invalid application path.');
-				}
-			}
-			else
-			{
-				throw new NutshellException(NutshellException::APP_ALREADY_REGISTERED, 'Application "'.$ref.'" has already been registered.');
-			}
-		}
-		
-		/**
-		 * 
-		 * @param  string $ref - The application reference.
-		 * @return string - Returns the full path of the registered application if it exists.
-		 */
-		public static function getApplicationPath($ref)
-		{
-			if (isset(self::$applicationRegistry[$ref]))
-			{
-				return self::$applicationRegistry[$ref];
-			}
-			else
-			{
-				throw new NutshellException(NutshellException::APP_NOT_REGISTERED, 'Application "'.$ref.'" has not been registered.');
 			}
 		}
 		
@@ -440,7 +400,7 @@ namespace nutshell
 		}
 		
 		/**
-		 * Returns the core loader instance.
+		 * Returns the core plugin loader instance.
 		 * 
 		 * @access public
 		 * @return nutshell\core\loader\Loader
@@ -448,6 +408,17 @@ namespace nutshell
 		public function getPluginLoader()
 		{
 			return $this->pluginLoader;
+		}
+		
+		/**
+		 * Returns the core application loader instance.
+		 * 
+		 * @access public
+		 * @return nutshell\core\loader\Loader
+		 */
+		public function getApplicationLoader()
+		{
+			return $this->applicationLoader;
 		}
 		
 		/*** OVERLOADING ***/
@@ -463,13 +434,14 @@ namespace nutshell
 		 */
 		public function __get($key)
 		{
-			if ($key=='plugin')
+			switch ($key)
 			{
-				return $this->pluginLoader;
-			}
-			else
-			{
-				throw new NutshellException(NutshellException::INVALID_PROPERTY, 'Attempted to get invalid property "'.$key.'" from core.');
+				case 'plugin':		return $this->pluginLoader;
+				case 'application':	return $this->applicationLoader;
+				default:
+				{
+					throw new NutshellException(NutshellException::INVALID_PROPERTY, 'Attempted to get invalid property "'.$key.'" from core.');
+				}
 			}
 		}
 		
@@ -493,6 +465,14 @@ namespace nutshell
 		public function hasPluginLoader()
 		{
 			return (isset($this->pluginLoader));
+		}
+		
+		/**
+		 * This function returns true in the case a application loader exists.
+		 */
+		public function hasApplicationLoader()
+		{
+			return (isset($this->applicationLoader));
 		}
 	}
 	
