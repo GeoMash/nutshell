@@ -29,8 +29,11 @@ namespace nutshell\core\config
 		
 		const CONFIG_REBUILD_KEY = 'config-reload';
 		
+		private static $configPath=null;
+		
 		public static function loadConfig($configPath, $environment) 
 		{
+			self::$configPath=$configPath;
 			if(self::hasToRebuild())
 			{
 				$config = self::rebuild($configPath, $environment);
@@ -165,7 +168,7 @@ namespace nutshell\core\config
 		
 		protected static function getCachedConfigFolder() 
 		{
-			return APP_HOME . Config::CONFIG_FOLDER . _DS_ . self::CONFIG_CACHE_FOLDER;
+			return self::$configPath . _DS_ . self::CONFIG_CACHE_FOLDER;
 		}
 		
 		protected static function getCachedConfigFile() 

@@ -168,7 +168,7 @@ namespace nutshell
 			
 			//Register the plugin container.
 			$this->applicationLoader->registerContainer('application',APP_HOME,'application\\');
-			// $this->pluginLoader->registerContainer('plugin',NS_HOME.'plugin'._DS_,'nutshell\plugin\\');
+			$this->pluginLoader->registerContainer('plugin',NS_HOME.'plugin'._DS_,'nutshell\plugin\\');
 			// $this->pluginLoader->registerContainer('appplugin',APP_HOME.'plugin'._DS_,'application\plugin\\');
 		}
 		
