@@ -111,9 +111,9 @@ namespace nutshell\core\config
 			//loads the framework default
 			$config = Config::loadConfigFile(NS_HOME . Config::CONFIG_FOLDER, Config::makeConfigFileName(Config::DEFAULT_ENVIRONMENT));
 			//loads the framework default plugins config
-			$config->extendWith(self::loadAllPluginConfig(NS_HOME . 'plugin', Config::DEFAULT_ENVIRONMENT));
+			$config->extendWith(self::loadAllPluginConfig(self::$configPath .'..'._DS_. 'plugin', Config::DEFAULT_ENVIRONMENT));
 			//loads the application plugins config
-			$config->extendWith(self::loadAllPluginConfig(APP_HOME . 'plugin', array($environment, Config::DEFAULT_ENVIRONMENT)));
+			$config->extendWith(self::loadAllPluginConfig(self::$configPath .'..'._DS_. 'plugin', array($environment, Config::DEFAULT_ENVIRONMENT)));
 			//loads the application config
 			$config->extendWith(Config::loadConfigFile($configPath, Config::makeConfigFileName(array($environment, Config::DEFAULT_ENVIRONMENT))));
 			
