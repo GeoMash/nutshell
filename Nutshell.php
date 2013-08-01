@@ -44,6 +44,7 @@ namespace nutshell
 		const INTERFACE_PHPUNIT		= 	'PHPUNIT';
 		
 		public $applicationConfig	=	null;
+		public $configPointer		=	null;
 		public $config 				=	null;
 		public $request				=	null;
 		private $pluginLoader       =   null;
@@ -148,9 +149,10 @@ namespace nutshell
 			//init loaders.
 			$this->initLoaders();
 			
+			$this->applicationConfig=new stdClass;
+			
 			$this->config=Framework::loadConfig(NS_HOME._DS_.Config::CONFIG_FOLDER, NS_ENV);
 			
-			$this->applicationConfig=new stdClass;
 			
 			
 			// // define temporary handlers
@@ -317,7 +319,7 @@ namespace nutshell
 			$this->applicationConfig->{$application}=Framework::loadConfig(APP_HOME.strtolower($application)._DS_.Config::CONFIG_FOLDER, NS_ENV);
 			if (self::$defaultConfig==$application)
 			{
-				$this->config=$this->applicationConfig->{$application};
+				$this->setConfigPointer($application);
 			}
 			return $this->applicationConfig->{$application};
 		}
@@ -330,9 +332,21 @@ namespace nutshell
 				$nutshell=Nutshell::getInstance();
 				if ($nutshell->getApplicationLoader()->isLoaded($application))
 				{
-					$nutshell->config=$nutshell->applicationConfig->{$application};
+					$nutshell->setConfigPointer($application);
 				}
 			}
+		}
+		
+		public function setConfigPointer($application)
+		{
+			$this->configPointer=$application;
+			$this->config		=$this->applicationConfig->{$this->configPointer};
+			return $this;
+		}
+		
+		public function getConfigPointer()
+		{
+			return $this->configPointer;
 		}
 		
 		/**

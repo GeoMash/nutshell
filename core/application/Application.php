@@ -32,7 +32,7 @@ namespace nutshell\core\application
 			$this->nutshell		=Nutshell::getInstance();
 			$this->config		=$this->nutshell->setupApplicationConfig(ObjectHelper::getBaseClassName(get_called_class()));
 			$this->application	=Nutshell::getInstance()->application;
-			$this->plugin		=Nutshell::getInstance()->plugin;
+			// $this->plugin		=Nutshell::getInstance()->plugin;
 			$this->request		=Nutshell::getInstance()->request;
 			
 			if (method_exists($this,'init'))
@@ -69,6 +69,32 @@ namespace nutshell\core\application
 				}
 			}
 			return $GLOBALS[$ref];
+		}
+		
+		public function __get($key)
+		{
+			switch ($key)
+			{
+				case 'plugin':
+				{
+					// $currentPointer=$this->nutshell->getConfigPointer();
+					$this->nutshell->setConfigPointer(ObjectHelper::getBaseClassName(get_called_class()));
+					return $this->nutshell->plugin;
+					// try
+					// {
+					// 	return $this->nutshell->plugin;
+					// }
+					// finally
+					// {
+					// 	print 'FINALLY';
+					// 	$this->nutshell->setConfigPointer($currentPointer);
+					// }
+				}
+				default:
+				{
+					throw new NutshellException(NutshellException::INVALID_PROPERTY, 'Attempted to get invalid property "'.$key.'" from application.');
+				}
+			}
 		}
 	}
 }

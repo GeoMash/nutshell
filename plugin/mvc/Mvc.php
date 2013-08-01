@@ -23,18 +23,24 @@ namespace nutshell\plugin\mvc
 		private $router			=null;
 		private $route			=null;
 		
+		public $application		=null;
+		
 		public static function registerBehaviours()
 		{
 			
 		}
 		
-		public function init()
+		public function init($application)
 		{
+			//Bind the application.
+			$this->application=$application;
+			
 			//Setup a model loader.
 			$this->modelLoader=new Loader();
 			
 			//Get the router handler.
 			$this->router	=$this->plugin->Router->getRouter();
+			
 			//Get the route from the rotuer.
 			$this->route	=$this->plugin->Router->getRoute();
 			
@@ -47,7 +53,7 @@ namespace nutshell\plugin\mvc
 			$this->loadController();
 			
 			//Construct the namespaced class name.
-			$className='application\controller\\'.$this->route->getControlNamespace().$this->route->getControl();
+			$className='application\\'.$this->application.'\controller\\'.$this->route->getControlNamespace().$this->route->getControl();
 			//Initiate the controller.
 			$this->controller=new $className($this);
 			
@@ -104,7 +110,7 @@ namespace nutshell\plugin\mvc
 			$controller	=str_replace('\\','/',$this->route->getControl());
 			
 			// The Directory with controllers in it
-			$dir=APP_HOME.$this->config->dir->controllers;
+			$dir=APP_HOME.$this->application._DS_.$this->config->dir->controllers;
 			
 			// Maybe we're at website.com/hello/. Check the directory for a Hello.php
 			// $file=$dir.ucFirst($controller).'.php';
@@ -132,18 +138,19 @@ namespace nutshell\plugin\mvc
 				{
 					// Now check for a directory by this node's name. Directories are all lowerCamelCase
 					$dir.=lcFirst($controller)._DS_;
-				
+					
 					// Update the controller to point to the next URI node 
 					$this->router->advancePointer();
 					$controller=$this->route->getControl();
 					
 					// If we are on the final node (controller is null) then Check this directory for an Index.php
-					$indexFile=$dir.lcFirst($controller)._DS_.'Index.php';
+					$indexFile=$dir.lcFirst($controller).'Index.php';
+					
 					if (!$controller && is_file($indexFile))
 					{
 						$this->router->advancePointer();
 						$this->route->setControl('Index');
-						$dir.=lcFirst($controller)._DS_;
+						// $dir.=_DS_.lcFirst($controller);
 						$file=$dir.'Index.php';
 						break;
 					}

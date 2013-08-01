@@ -43,7 +43,7 @@ namespace nutshell\core\plugin
 		 * @access public
 		 * @var nutshell\core\config\Config
 		 */
-		public $config							= null;
+		// public $config							= null;
 		/**
 		 * @access public
 		 * @var nutshell\Nutshell
@@ -54,6 +54,8 @@ namespace nutshell\core\plugin
 		 * @var nutshell\core\plugin\Plugin
 		 */
 		public $plugin							= null;
+		
+		private $baseClassName					= null;
 		
 // 		abstract public static function getInstance(Array $args=array());
 		
@@ -67,10 +69,11 @@ namespace nutshell\core\plugin
 		public function __construct()
 		{
 			parent::__construct();
+			$this->baseClassName=ObjectHelper::getBaseClassName($this);
 			$this->nutshell	=Nutshell::getInstance();
-			$this->config	=$this->nutshell->config->plugin->{ObjectHelper::getBaseClassName($this)};
-			$this->plugin	=Nutshell::getInstance()->plugin;
-			$this->request	=Nutshell::getInstance()->request;
+			// $this->config	=$this->nutshell->config->plugin->{ObjectHelper::getBaseClassName($this)};
+			$this->plugin	=$this->nutshell->plugin;
+			$this->request	=$this->nutshell->request;
 		}
 		
 		/**
@@ -152,6 +155,10 @@ namespace nutshell\core\plugin
 		 */
 		public function __get($key)
 		{
+			if ($key=='config')
+			{
+				return $this->nutshell->config->plugin->{$this->baseClassName};
+			}
 			if (($this instanceof Singleton && $this instanceof AbstractFactory)
 			&& $result=static::runFactory($key))
 			{

@@ -23,7 +23,7 @@ namespace nutshell\plugin\mvc
 		{
 			$this->MVC		=$MVC;
 			$this->view		=new View($this->MVC);
-			$this->MVC->getModelLoader()->registerContainer('model',APP_HOME.'model'._DS_,'application\model\\');
+			$this->MVC->getModelLoader()->registerContainer('model',APP_HOME.$this->MVC->application._DS_.'model'._DS_,'application\\'.$this->MVC->application.'\model\\');
 		}
 		
 		public function __get($key)

@@ -534,7 +534,12 @@ namespace nutshell\core\config
 					}
 				}
 			}
-			
+			die (sprintf
+				(
+					"Failed to find a suitable config file named any of [%s] in any path alternatives [%s]",
+					implode(', ', $basenames),
+					implode(', ', $pathAlternatives)
+				));
 			throw new ConfigException
 			(
 				ConfigException::CONFIG_FILE_NOT_FOUND,

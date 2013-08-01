@@ -27,7 +27,10 @@ namespace nutshell\core\plugin
 		 */
 		public static function register() 
 		{
-			if (!isset($GLOBALS['NUTSHELL_PLUGIN_SINGLETON']))$GLOBALS['NUTSHELL_PLUGIN_SINGLETON']=array();
+			if (!isset($GLOBALS['NUTSHELL_PLUGIN_SINGLETON']))
+			{
+				$GLOBALS['NUTSHELL_PLUGIN_SINGLETON']=array();
+			}
 			static::load(array());
 		}
 		

@@ -122,7 +122,7 @@ namespace nutshell\plugin\mvc
 		
 		public function buildViewPath($viewName)
 		{
-			return APP_HOME.$this->MVC->config->dir->views.$viewName.'.php';
+			return APP_HOME.$this->MVC->application._DS_.$this->MVC->config->dir->views.$viewName.'.php';
 		}
 		
 		private function _render($viewFile)

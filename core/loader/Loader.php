@@ -229,7 +229,7 @@ namespace nutshell\core\loader
 			$className  = $this->classNames[$key];
 			$interfaces = $this->interfaces[$key];
 			
-			if (in_array('nutshell\behaviour\Loadable', $interfaces))
+			if (in_array('nutshell\behaviour\Loadable',(array)$interfaces))
 			{
 				// Initiate
 				$this->loaded[$key] = 'Loading';

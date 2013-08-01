@@ -60,7 +60,6 @@ namespace nutshell\plugin\logger
 		protected function resolveLoggerConfig() 
 		{
 			$candidate = null;
-			
 			foreach($this->config->loggers as $nodeName => $config)
 			{
 				if(
