@@ -24,8 +24,9 @@ namespace nutshell\plugin\modelGenerator
 	{
 		protected $db;
 		
-		private $baseClassNamespace	= 'nutshell\\plugin\\mvc\\model\\';
-		private	$baseClass			= 'CRUD';
+		private $baseClassNamespace		= 'nutshell\\plugin\\mvc\\model\\';
+		private	$baseClass				= 'CRUD';
+		private $applicationNamespace	='';
 		
 		public function getBaseClassNamespace()
 		{
@@ -36,6 +37,12 @@ namespace nutshell\plugin\modelGenerator
 		{
 		    $this->baseClassNamespace = $newBaseClassNamespace;
 		    return $this;
+		}
+		
+		public function setAppliacationNamespace($applicationNamespace)
+		{
+			$this->applicationNamespace=$applicationNamespace;
+			return $this;
 		}
 		
 		public function getBaseClass()
@@ -156,7 +163,7 @@ namespace nutshell\plugin\modelGenerator
 
 			// make sure the linux '/' are converted to namespace '\'
 			// FIXME we need to be able to customise the base namespace, not only application\model\*
-			$namespace = sprintf('application\\model%s', str_replace('/', '\\', $folder));
+			$namespace = sprintf('%smodel%s', $this->applicationNamespace ,str_replace('/', '\\', $folder));
 			
 			
 			$template	=$this->plugin->Template(__DIR__._DS_.'model.tpl.php');
