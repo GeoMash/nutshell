@@ -54,34 +54,6 @@ namespace nutshell\core\loader
 		{
 			$namespace=ObjectHelper::getNamespace($className);
 			$className=ObjectHelper::getBaseClassName($className);
-			
-			
-			//Check for an application plugin's library class.
-			// if (strstr($namespace,'plugin\\'))
-			// {
-			// 	$namespaceParts	=explode('\\',$namespace);
-			// 	$where			=array_shift($namespaceParts);
-			// 	$filePath		=false;
-			// 	if ($where==='nutshell')
-			// 	{
-			// 		$filePath=NS_HOME.implode(_DS_,$namespaceParts)._DS_.$className.'.php';
-			// 	}
-			// 	else if ($where==='application')
-			// 	{
-			// 		$filePath=APP_HOME.implode(_DS_,$namespaceParts)._DS_.$className.'.php';
-			// 	}
-			// 	if (is_file($filePath))
-			// 	{
-			// 		//Invoke the plugin.
-			// 		require_once($filePath);
-			// 	}
-			// 	else
-			// 	{
-			// 		throw new ('Unable to autoload class "'.$namespace.'\\'.$className.'".');
-			// 	}
-			// }
-			// //Check for a plugin behaviour.
-			// else 
 			if (strstr($namespace,'behaviour\\'))
 			{
 				list(,,$plugin)	=explode('\\',$namespace);
@@ -114,6 +86,7 @@ namespace nutshell\core\loader
 				{
 					$filePath=APP_HOME.implode(_DS_,$namespaceParts)._DS_.$className.'.php';
 				}
+				
 				if (is_file($filePath))
 				{
 					require_once($filePath);
@@ -177,7 +150,8 @@ namespace nutshell\core\loader
 					if (is_file($dirBaseFolderFile=$dirBase.lcfirst($key)._DS_.$key.'.php'))
 					{
 						$className = $namespaceBase.lcfirst($key).'\\'.$key;
-						if(!class_exists($className)) {
+						if(!class_exists($className))
+						{
 							require_once($dirBaseFolderFile);
 						}
 						$this->classNames[$key] = $className;
