@@ -53,7 +53,7 @@ namespace nutshell\plugin\template
 		
 		public function setKeyVal($key,$val)
 		{
-			$this->context->setKeyVals($key,$val);
+			$this->context->setKeyVal($key,$val);
 			return $this;
 		}
 		

@@ -128,11 +128,7 @@ namespace nutshell\plugin\mvc
 		private function _render($viewFile)
 		{
 			$this->template->setTemplate($viewFile);
-			$this->template->setKeyVal
-			(
-				array_keys($this->templateVars),
-				array_values($this->templateVars)
-			);
+			$this->template->setKeyValArray($this->templateVars);
 			return $this->template->compile();
 		}
 		
