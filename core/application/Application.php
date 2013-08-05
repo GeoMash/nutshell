@@ -29,11 +29,14 @@ namespace nutshell\core\application
 		public function __construct()
 		{
 			parent::__construct();
+			$applicationName	=ObjectHelper::getBaseClassName(get_called_class());
+			$applicationRef		=strtolower($applicationName);
 			$this->nutshell		=Nutshell::getInstance();
-			$this->config		=$this->nutshell->setupApplicationConfig(ObjectHelper::getBaseClassName(get_called_class()));
+			$this->config		=$this->nutshell->setupApplicationConfig($applicationName);
 			$this->application	=Nutshell::getInstance()->application;
-			// $this->plugin		=Nutshell::getInstance()->plugin;
 			$this->request		=Nutshell::getInstance()->request;
+			
+			$this->nutshell->getPluginLoader()->registerContainer($applicationRef.'_plugin',APP_HOME.$applicationRef._DS_.'plugin'._DS_,'application\\'.$applicationRef.'\plugin\\');
 			
 			if (method_exists($this,'init'))
 			{
