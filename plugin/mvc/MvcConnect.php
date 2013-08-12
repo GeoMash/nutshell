@@ -87,7 +87,7 @@ namespace nutshell\plugin\mvc
 			}
 			else
 			{
-				parent::__get($key);
+				return parent::__get($key);
 			}
 		}
 	}
