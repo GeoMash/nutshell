@@ -316,7 +316,7 @@ namespace nutshell
 		 */
 		public function setupApplicationConfig($application)
 		{
-			$this->applicationConfig->{$application}=Framework::loadConfig(APP_HOME.strtolower($application)._DS_.Config::CONFIG_FOLDER, NS_ENV);
+			$this->applicationConfig->{$application}=Framework::loadConfig(APP_HOME.lcfirst($application)._DS_.Config::CONFIG_FOLDER, NS_ENV);
 			if (self::$defaultConfig==$application)
 			{
 				$this->setConfigPointer($application);
