@@ -25,20 +25,20 @@ namespace nutshell\plugin\session
 		
 		public static function registerBehaviours()
 		{
-			static::registerBehaviour
-			(
-				get_called_class(),
-				'NamedSession',
-				function($classInstance)
-				{
-					$session	=Nutshell::getInstance()->plugin->Session;
-					if (!isset($session->{ObjectHelper::getBaseClassName($classInstance)}))
-					{
-						$session->{ObjectHelper::getBaseClassName($classInstance)}=new stdClass();
-					}
-					$classInstance->session=$session->{ObjectHelper::getBaseClassName($classInstance)};
-				}
-			);
+			// static::registerBehaviour
+			// (
+			// 	get_called_class(),
+			// 	'NamedSession',
+			// 	function($classInstance)
+			// 	{
+			// 		$session	=Nutshell::getInstance()->plugin->Session;
+			// 		if (!isset($session->{ObjectHelper::getBaseClassName($classInstance)}))
+			// 		{
+			// 			$session->{ObjectHelper::getBaseClassName($classInstance)}=new stdClass();
+			// 		}
+			// 		$classInstance->session=$session->{ObjectHelper::getBaseClassName($classInstance)};
+			// 	}
+			// );
 		}
 		
 		public static function runFactory($string)
