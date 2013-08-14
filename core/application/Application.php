@@ -30,12 +30,11 @@ namespace nutshell\core\application
 		{
 			parent::__construct();
 			$applicationName	=ObjectHelper::getBaseClassName(get_called_class());
-			$applicationRef		=strtolower($applicationName);
+			$applicationRef		=lcfirst($applicationName);
 			$this->nutshell		=Nutshell::getInstance();
 			$this->config		=$this->nutshell->setupApplicationConfig($applicationName);
 			$this->application	=Nutshell::getInstance()->application;
 			$this->request		=Nutshell::getInstance()->request;
-			
 			$this->nutshell->getPluginLoader()->registerContainer($applicationRef.'_plugin',APP_HOME.$applicationRef._DS_.'plugin'._DS_,'application\\'.$applicationRef.'\plugin\\');
 			
 			if (method_exists($this,'init'))
