@@ -28,7 +28,7 @@ namespace nutshell\core\plugin
 		{
 			$NS		=ObjectHelper::getNamespace($this);
 			$NSParts=explode('\\',$NS);
-			if ($NSParts[1]=='plugin')
+			if ($NSParts[1]=='plugin' || $NSParts[2]=='plugin')
 			{
 				if (isset($NSParts[2]))
 				{
