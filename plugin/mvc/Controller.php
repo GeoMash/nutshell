@@ -18,11 +18,13 @@ namespace nutshell\plugin\mvc
 	{
 		public $MVC		=null;
 		public $view	=null;
+		public $config	=null;
 		
 		public function __construct(Mvc $MVC)
 		{
 			$this->MVC		=$MVC;
 			$this->view		=new View($this->MVC);
+			$this->config	=Nutshell::getInstance()->config;
 			$this->MVC->getModelLoader()->registerContainer('model',APP_HOME.$this->MVC->application._DS_.'model'._DS_,'application\\'.$this->MVC->application.'\model\\');
 		}
 		
