@@ -7,6 +7,7 @@ namespace nutshell\core\request
 	{
 		public $data	=null;
 		public $raw		=null;
+		public $files	=null;
 		public $nodes	=array();
 		
 		abstract protected function setupNodes();
@@ -17,6 +18,10 @@ namespace nutshell\core\request
 		{
 			$this->setupNodes();
 			$this->setupData();
+			if (method_exists($this,'gatherFiles'))
+			{
+				$this->gatherFiles();
+			}
 		}
 		
 		public function get($key)
@@ -24,7 +29,7 @@ namespace nutshell\core\request
 			return (isset($this->data[$key]))?$this->data[$key]:null;
 		}
 		
-		public function getAll() 
+		public function getAll()
 		{
 			return $this->data;
 		}
@@ -32,6 +37,11 @@ namespace nutshell\core\request
 		public function getRaw()
 		{
 			return $this->raw;
+		}
+		
+		public function getFiles()
+		{
+			return $this->files;
 		}
 		
 		public function set()

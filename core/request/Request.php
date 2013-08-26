@@ -53,6 +53,35 @@ namespace nutshell\core\request
 			return $this->handler->getAll();
 		}
 		
+		public function getFiles()
+		{
+			return $this->handler->getFiles();
+		}
+		
+		public function moveFile($ref,$destination)
+		{
+			if (method_exists($this->handler,'moveFile'))
+			{
+				return $this->handler->moveFile($ref,$destination);
+			}
+			else
+			{
+				throw new RequestException(RequestException::FILE_NO_SUPPORT, 'The active file handler does not support moving files.');
+			}
+		}
+		
+		public function getFileError($ref)
+		{
+			if (method_exists($this->handler,'getFileError'))
+			{
+				return $this->handler->getFileError($ref);
+			}
+			else
+			{
+				throw new RequestException(RequestException::FILE_NO_SUPPORT, 'The active file handler does not support getting file errors.');
+			}
+		}
+		
 		/**
 		 * 
 		 * @access public
