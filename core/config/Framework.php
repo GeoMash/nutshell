@@ -37,6 +37,10 @@ namespace nutshell\core\config
 			if(self::hasToRebuild())
 			{
 				$config = self::rebuild($configPath, $environment);
+				if(isset($_SERVER['GATEWAY_INTERFACE']))
+				{
+					header('X-Nutshell-Config-Rebuilt:1');
+				}
 			}
 			else
 			{
