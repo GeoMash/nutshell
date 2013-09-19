@@ -126,6 +126,16 @@ namespace nutshell\core\request
 			return $this->handler->nodes;
 		}
 		
+		public function firstNode()
+		{
+			return reset($this->handler->nodes);
+		}
+		
+		public function lastNode()
+		{
+			return end($this->handler->nodes);
+		}
+		
 		private function resetIndex($exclude=null)
 		{
 			$newIndex=array();
