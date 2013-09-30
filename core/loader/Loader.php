@@ -47,7 +47,7 @@ namespace nutshell\core\loader
 		 */
 		private $loaded		=array
 		(
-			'plugin'		=>array()
+//			'plugin'		=>array()	//wtf was this doing here??? O_o -Tim
 		);
 		
 		public static function autoload($className)
@@ -144,7 +144,7 @@ namespace nutshell\core\loader
 			{
 				foreach($this->containers as $containerKey => &$container)
 				{
-					//No, so we need to load all of it's dependancies and initiate it.
+					//No, so we need to load all of it's dependencies and initiate it.
 					$dirBase=$container['path'];
 					$namespaceBase=$container['namespace'];
 					if (is_file($dirBaseFolderFile=$dirBase.lcfirst($key)._DS_.$key.'.php'))
@@ -225,6 +225,20 @@ namespace nutshell\core\loader
 		public function isLoaded($key)
 		{
 			return isset($this->loaded[$key]);
+		}
+
+		public function getLoaded()
+		{
+			return $this->loaded;
+		}
+
+		public function getNamespace($key)
+		{
+			if ($this->isLoaded($key))
+			{
+				return ObjectHelper::getNamespace($this->classNames[$key]);
+			}
+			return null;
 		}
 
 		public function __get($key)
