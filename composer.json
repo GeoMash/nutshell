@@ -1,8 +1,7 @@
 {
 	"name":             "nutshell/nutshell",
 	"description":      "Nutshell - Built on Faith",
-	"type":             "framework",
-	"license": "Custom (see bundled LICENSE file)",
+	"license":          "Custom (see bundled LICENSE file)",
 	"authors":
     [
         {
@@ -10,15 +9,17 @@
             "email":"tim@praxisbt.com"
         },
         {
-	        "name": "Guillaume Bodi",
-	        "email":"guillaume@spinifexgroup.com"
+            "name": "Guillaume Bodi",
+            "email":"guillaume@spinifexgroup.com"
         },
         {
-	        "name": "Dean Rather",
-	        "email":"dean@sudocode.com"
+            "name": "Dean Rather",
+            "email":"dean@sudocode.com"
         }
     ],
-	"require": {
-		"php": ">=5.3.4"
-	}
+	"require":
+    {
+        "php": ">=5.3.4",
+        "composer/installers": "~1.0"
+    }
 }
