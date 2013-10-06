@@ -402,7 +402,7 @@ namespace nutshell
 		 * 
 		 * @static
 		 * @access public
-		 * @return void
+		 * @return \nutshell\Nutshell
 		 */
 		public static function getInstance()
 		{
