@@ -1,0 +1,20 @@
+{
+	"name":             "nutshell/nutshell",
+	"description":      "Nutshell - Built on Faith",
+	"minimum-stability":"stable",
+	"authors":
+    [
+        {
+            "name": "Timothy Chandler",
+            "email":"tim@praxisbt.com"
+        },
+        {
+	        "name": "Guillaume Bodi",
+	        "email":"guillaume@spinifexgroup.com"
+        },
+        {
+	        "name": "Dean Rather",
+	        "email":"dean@sudocode.com"
+        }
+    ]
+}
