@@ -1,7 +1,8 @@
 {
 	"name":             "nutshell/nutshell",
 	"description":      "Nutshell - Built on Faith",
-	"minimum-stability":"stable",
+	"type":             "framework",
+	"license": "Custom (see bundled LICENSE file)",
 	"authors":
     [
         {
@@ -16,5 +17,8 @@
 	        "name": "Dean Rather",
 	        "email":"dean@sudocode.com"
         }
-    ]
+    ],
+	"require": {
+		"php": ">=5.3.4"
+	}
 }
