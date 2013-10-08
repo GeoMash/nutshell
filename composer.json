@@ -1,0 +1,36 @@
+{
+	"name":             "nutshell/nutshell",
+	"description":      "Nutshell - Built on Faith",
+	"license":          "Custom (see bundled LICENSE file)",
+	"authors":
+    [
+        {
+            "name": "Timothy Chandler",
+            "email":"tim@praxisbt.com"
+        },
+        {
+            "name": "Guillaume Bodi",
+            "email":"guillaume@spinifexgroup.com"
+        },
+        {
+            "name": "Dean Rather",
+            "email":"dean@sudocode.com"
+        }
+    ],
+	"require":
+    {
+        "php": ">=5.3.4",
+        "composer/installers": "~1.0"
+    },
+	"extra":
+	{
+		"installer-paths":
+		{
+			"private/lib/{name}":
+			[
+				"nutshell/nutshell"
+			]
+		},
+		"installer-name": "nutshell"
+	}
+}
