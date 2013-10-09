@@ -90,7 +90,7 @@ namespace nutshell\plugin\formatParser
 
 			foreach($rawSplit as $val)
 			{
-				$accumulator[] = $val;
+				$accumulator[] = trim($val);;
 				$candidateValue = implode($this->fieldDelimiter, $accumulator);
 				if($this->isComplete($candidateValue))
 				{
