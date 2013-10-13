@@ -1,6 +1,6 @@
 {
 	"name":             "nutshell/nutshell",
-	"type":             "zend-extra",
+	"type":             "library",
 	"description":      "Nutshell - Built on Faith",
 	"license":          "Custom (see bundled LICENSE file)",
 	"authors":
