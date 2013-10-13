@@ -22,6 +22,11 @@ namespace nutshell\core\plugin
 		{
 			parent::__construct();
 			$this->config=Nutshell::getInstance()->config->plugin->{ObjectHelper::getBaseClassName($this->getParentPlugin())};
+
+			if (method_exists($this,'init'))
+			{
+				$this->init();
+			}
 		}
 		
 		private function getParentPlugin()
