@@ -1,6 +1,6 @@
 {
 	"name":             "nutshell/nutshell",
-	"type":             "nutshell-application",
+	"type":             "lib-private",
 	"description":      "Nutshell - Built on Faith",
 	"license":          "Custom (see bundled LICENSE file)",
 	"authors":
