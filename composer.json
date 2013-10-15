@@ -21,7 +21,7 @@
 	"require":
     {
         "php": ">=5.3.4",
-        "praxisbt/installers": "~1.0"
+        "praxisbt/installers": "dev-master"
     },
 	"repositories":
 	[
