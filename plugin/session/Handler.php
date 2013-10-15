@@ -189,7 +189,9 @@ namespace nutshell\plugin\session
 		
 		protected function start()
 		{
-			session_start();
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}			
 			return $this;
 		}
 		
