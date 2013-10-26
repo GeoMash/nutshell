@@ -1,6 +1,6 @@
 {
 	"name":             "nutshell/nutshell",
-	"type":             "library",
+	"type":             "library-private",
 	"description":      "Nutshell - Built on Faith",
 	"license":          "Custom (see bundled LICENSE file)",
 	"authors":
@@ -22,5 +22,12 @@
     {
         "php": ">=5.3.4",
         "composer/installers": "~1.0"
-    }
+    },
+	"repositories":
+	[
+		{
+			"type": "git",
+			"url":  "http://git.geomash.com/open-source/composer-installers.git"
+		}
+	]
 }
