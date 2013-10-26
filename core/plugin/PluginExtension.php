@@ -33,17 +33,38 @@ namespace nutshell\core\plugin
 		{
 			$NS		=ObjectHelper::getNamespace($this);
 			$NSParts=explode('\\',$NS);
-			if ($NSParts[1]=='plugin' || $NSParts[2]=='plugin')
+			$plugin	=null;
+			for ($i=0,$j=count($NSParts); $i<$j; $i++)
 			{
-				if (isset($NSParts[2]))
+				if ($NSParts[$i]=='plugin')
 				{
-					$NSParts[2]=ucwords($NSParts[2]);
+					if (isset($NSParts[$i+1]))
+					{
+						$plugin=$NSParts[$i+1];
+						break;
+					}
+					else
+					{
+						throw new PluginException(PluginException::NO_PARENT_PLUGIN, 'Unable to find parent plugin.');
+					}
 				}
-				else
+			}
+			if ($plugin)
+			{
+				$fullPath='';
+				for ($i=0,$j=count($NSParts); $i<$j; $i++)
 				{
-					throw new PluginException(PluginException::NO_PARENT_PLUGIN, 'Unable to find parent plugin.');
+					if ($NSParts[$i]==$plugin)
+					{
+						$fullPath.=ucwords($plugin);
+						break;
+					}
+					else
+					{
+						$fullPath.=$NSParts[$i].'\\';
+					}
 				}
-				return $NSParts[0].'\\'.$NSParts[1].'\\'.$NSParts[2];
+				return $fullPath;
 			}
 			else
 			{
