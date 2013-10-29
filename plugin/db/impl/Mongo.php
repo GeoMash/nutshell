@@ -352,7 +352,7 @@ namespace nutshell\plugin\db\impl
 		public function delete($collection, $query, $justOne = false)
 		{
 			try {
-				$this->getCollection($collection)->remove($query, array(
+				return $this->getCollection($collection)->remove($query, array(
 					'justOne' => $justOne == true
 				));
 			}
