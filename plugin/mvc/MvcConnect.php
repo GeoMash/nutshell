@@ -48,6 +48,11 @@ namespace nutshell\plugin\mvc
 			}
 			parent::__construct();
 		}
+
+		public function getDb()
+		{
+			return $this->db;
+		}
 		
 		/**
 		 * returns a model loader
