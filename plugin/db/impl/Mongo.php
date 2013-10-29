@@ -99,6 +99,9 @@ namespace nutshell\plugin\db\impl
 
 		protected $dbSchema = '';
 
+		/**
+		 * @var \MongoClient|null
+		 */
 		protected $connection = null;
 
 		protected $databaseHandle = null;
@@ -186,7 +189,7 @@ namespace nutshell\plugin\db\impl
 
 		/**
 		 * Disconnects the database connection.
-		 * 
+		 *
 		 * @access public
 		 * @return $this
 		 */
