@@ -24,7 +24,7 @@ namespace nutshell\plugin\mvc
 		
 		/**
 		 * Default DB connection
-		 * @var DB object
+		 * @var $db \nutshell\plugin\db\impl\Mongo
 		 */
 		protected $db	   =null;
 		
