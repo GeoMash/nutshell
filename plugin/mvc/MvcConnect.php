@@ -49,8 +49,12 @@ namespace nutshell\plugin\mvc
 			parent::__construct();
 		}
 
-		public function getDb()
+		public function getDb($db=null)
 		{
+			if (!is_null($db))
+			{
+				$this->db->selectDb($db);
+			}
 			return $this->db;
 		}
 		
