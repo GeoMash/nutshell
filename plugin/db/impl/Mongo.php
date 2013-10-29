@@ -192,9 +192,8 @@ namespace nutshell\plugin\db\impl
 		 */
 		public function disconnect()
 		{
-			if($this->connection)
+			if(!is_null($this->connection))
 			{
-				$this->connection->close();
 				unset($this->connection);
 			}
 			return $this;
