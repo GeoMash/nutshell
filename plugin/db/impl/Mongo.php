@@ -129,8 +129,10 @@ namespace nutshell\plugin\db\impl
 					$this->getMongoConnectionString($options),
 					$connectionOptions
 				);
-
-				$this->databaseHandle = $this->connection->selectDB($this->dbSchema);
+				if (!empty($this->dbSchema))
+				{
+					$this->databaseHandle = $this->connection->selectDB($this->dbSchema);
+				}
 			}
 			catch(MongoException $exception)
 			{
