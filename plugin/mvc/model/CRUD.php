@@ -260,7 +260,6 @@ SQL;
 			{
 				// filters by the given where
 				$this->getWhereSQL($whereKeyVals, $whereKeySQL, $whereKeyValues);
-				$whereKeySQL = " WHERE ".$whereKeySQL;
 			} 
 			
 			// are columns to be read defined?
@@ -303,7 +302,7 @@ SQL;
 			//Quick update is possible if $whereKeyVals is numeric and PK is composed by only one column.
 			if (is_numeric($whereKeyVals) && (count($this->primary)==1))
 			{
-				$whereKeySQL = " `{$this->primary[0]}` = ? ";
+				$whereKeySQL = " WHERE  `{$this->primary[0]}` = ? ";
 				$whereKeyValues[] = (int) $whereKeyVals;
 			}
 			//More specific keyval matching.
@@ -315,11 +314,11 @@ SQL;
 					$where[]= '`' . $key . '` = ?';
 					$whereKeyValues[] = $value;
 				}
-				$whereKeySQL=implode(' AND ',$where);
+				$whereKeySQL=' WHERE '.implode(' AND ',$where);
 			}
 			else
 			{
-		 		throw new MvcException(MvcException::INVALID_WHEREKEYVALS, '$whereKeyVals is invalid. Specify an array of key value pairs or a single numeric for primay key match.');
+		 		$whereKeySQL='';
 			}
 		}
 		
@@ -341,7 +340,7 @@ SQL;
 			$query=<<<SQL
 			UPDATE {$dbPrefix}`{$this->name}`
 			SET {$set}
-			WHERE {$whereKeySQL};
+			{$whereKeySQL};
 SQL;
 			return $this->db->update($query,array_merge(array_values($updateKeyVals),$whereKeyValues));
 		}
@@ -357,7 +356,7 @@ SQL;
 			$this->getWhereSQL($whereKeyVals, $whereKeySQL, $whereKeyValues);
 			
 			$dbPrefix = $this->getDbPrefix();
-			$query=" DELETE FROM {$dbPrefix}`{$this->name}` WHERE {$whereKeySQL} ";
+			$query=" DELETE FROM {$dbPrefix}`{$this->name}` {$whereKeySQL} ";
 			 
 			return $this->db->delete($query,$whereKeyValues);
 		}
