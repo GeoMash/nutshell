@@ -39,6 +39,11 @@ namespace nutshell\plugin\mvc
 				return parent::__get($key);
 			}
 		}
+
+		public function getMVC()
+		{
+			return $this->MVC;
+		}
 	}
 }
 ?>
