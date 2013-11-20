@@ -2,8 +2,8 @@
 	"config":
 	{
 		"timeout": 		3600,
-		"storage": 		"db",
-		"connector": 	"mysql",
-		"table":		"sessions"
+		"storage": 		"file",
+		"connector": 	"",
+		"table":		""
 	}
 }
