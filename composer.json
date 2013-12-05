@@ -1,0 +1,33 @@
+{
+	"name":             "nutshell/nutshell",
+	"type":             "library-private",
+	"description":      "Nutshell - Built on Faith",
+	"license":          "Custom (see bundled LICENSE file)",
+	"authors":
+    [
+        {
+            "name": "Timothy Chandler",
+            "email":"tim@praxisbt.com"
+        },
+        {
+            "name": "Guillaume Bodi",
+            "email":"guillaume@spinifexgroup.com"
+        },
+        {
+            "name": "Dean Rather",
+            "email":"dean@sudocode.com"
+        }
+    ],
+	"require":
+    {
+        "php": ">=5.3.4",
+        "composer/installers": "~1.0"
+    },
+	"repositories":
+	[
+		{
+			"type": "git",
+			"url":  "http://git.geomash.com/open-source/composer-installers.git"
+		}
+	]
+}
