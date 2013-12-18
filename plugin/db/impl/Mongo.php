@@ -99,6 +99,9 @@ namespace nutshell\plugin\db\impl
 
 		protected $dbSchema = '';
 
+		/**
+		 * @var \MongoClient|null
+		 */
 		protected $connection = null;
 
 		protected $databaseHandle = null;
@@ -126,8 +129,10 @@ namespace nutshell\plugin\db\impl
 					$this->getMongoConnectionString($options),
 					$connectionOptions
 				);
-
-				$this->databaseHandle = $this->connection->selectDB($this->dbSchema);
+				if (!empty($this->dbSchema))
+				{
+					$this->databaseHandle = $this->connection->selectDB($this->dbSchema);
+				}
 			}
 			catch(MongoException $exception)
 			{
@@ -186,15 +191,14 @@ namespace nutshell\plugin\db\impl
 
 		/**
 		 * Disconnects the database connection.
-		 * 
+		 *
 		 * @access public
 		 * @return $this
 		 */
 		public function disconnect()
 		{
-			if($this->connection)
+			if(!is_null($this->connection))
 			{
-				$this->connection->close();
 				unset($this->connection);
 			}
 			return $this;
@@ -352,7 +356,7 @@ namespace nutshell\plugin\db\impl
 		public function delete($collection, $query, $justOne = false)
 		{
 			try {
-				$this->getCollection($collection)->remove($query, array(
+				return $this->getCollection($collection)->remove($query, array(
 					'justOne' => $justOne == true
 				));
 			}

@@ -24,7 +24,7 @@ namespace nutshell\plugin\mvc
 		
 		/**
 		 * Default DB connection
-		 * @var DB object
+		 * @var $db \nutshell\plugin\db\impl\Mongo
 		 */
 		protected $db	   =null;
 		
@@ -47,6 +47,15 @@ namespace nutshell\plugin\mvc
 				}
 			}
 			parent::__construct();
+		}
+
+		public function getDb($db=null)
+		{
+			if (!is_null($db))
+			{
+				$this->db->selectDb($db);
+			}
+			return $this->db;
 		}
 		
 		/**
