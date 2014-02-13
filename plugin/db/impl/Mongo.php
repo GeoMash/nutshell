@@ -385,5 +385,21 @@ namespace nutshell\plugin\db\impl
 				throw new DbException(DbException::MONGO_EXCEPTION, $me->getMessage(), $me);
 			}
 		}
+		
+		/*
+		 * MongoCollection::Aggregation
+		 */
+		public function aggregate($collection){
+			try{
+				$c=$collection;
+				$arguments=func_get_args();
+				array_splice($arguments, 0, 1);
+				return $this->getCollection($c)->aggregate($arguments);
+			}
+			catch(MongoException $me)
+			{
+				throw new DbException(DbException::MONGO_EXCEPTION, $me->getMessage(), $me);
+			}
+		}
 	}
 }
