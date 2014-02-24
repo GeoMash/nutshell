@@ -1,6 +1,7 @@
 <?php
 namespace nutshell\plugin\format
 {
+	use nutshell\Nutshell;
 	use nutshell\behaviour\AbstractFactory;
 	use nutshell\core\plugin\Plugin;
 	use nutshell\plugin\format\exception\FormatException;
@@ -68,8 +69,7 @@ namespace nutshell\plugin\format
 			}
 			else
 			{
-				$error_msg = "Engine $engine isn't supported.";
-				$this->plugin->Logger->fatal($error_msg); // just to be sure that the error message will be in the log.
+				Nutshell::getInstance()->plugin->Logger->fatal('Engine $engine isn\'t supported.'); // just to be sure that the error message will be in the log.
 				throw new FormatException(FormatException::UNSUPPORTED_ENGINE, $error_msg);
 			}
 		}
