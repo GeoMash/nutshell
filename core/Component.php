@@ -72,18 +72,26 @@ namespace nutshell\core
 		 * framework.
 		 * 
 		 * @param String $key - The shortcut.
-		 * @deprecated
 		 */
 		public function __get($key)
 		{
+			$nutshell=Nutshell::getInstance();
 			switch ($key)
 			{
-				case 'config':		return Nutshell::getInstance()->config;
+				case 'config':		return $nutshell->config;
 				case 'core':		throw new NutshellException('$this->core is deprecated. Use $this->nutshell instead.');
-				case 'nutshell':	return Nutshell::getInstance();
-				case 'application':	return Nutshell::getInstance()->application;
-				case 'plugin':		return Nutshell::getInstance()->plugin;
-				case 'request':		return Nutshell::getInstance()->request;
+				case 'nutshell':	return $nutshell;
+				case 'application':	return $nutshell->application;
+				case 'plugin':		return $nutshell->plugin;
+				case 'request':		return $nutshell->request;
+				default:
+				{
+					$callback=$nutshell->getGetHook($key);
+					if (is_callable($callback))
+					{
+						return $callback();
+					}
+				}
 			}
 		}
 	}

@@ -30,27 +30,28 @@ namespace nutshell
 	 */
 	class Nutshell
 	{
-		const VERSION				=	'1.1.0-dev-1';
-		const VERSION_MAJOR			=	1;
-		const VERSION_MINOR			=	1;
-		const VERSION_MICRO			=	0;
-		const VERSION_DEV			=	1;
-		const NUTSHELL_ENVIRONMENT	=	'NS_ENV';
-		const DEFAULT_ENVIRONMENT	= 	'production';
+		const VERSION				='1.1.0-dev-1';
+		const VERSION_MAJOR			=1;
+		const VERSION_MINOR			=1;
+		const VERSION_MICRO			=0;
+		const VERSION_DEV			=1;
+		const NUTSHELL_ENVIRONMENT	='NS_ENV';
+		const DEFAULT_ENVIRONMENT	='production';
 		
-		const INTERFACE_CLI 		= 	'CLI';
-		const INTERFACE_CGI			=	'CGI';
-		const INTERFACE_HTTP 		= 	'HTTP';
-		const INTERFACE_PHPUNIT		= 	'PHPUNIT';
+		const INTERFACE_CLI 		='CLI';
+		const INTERFACE_CGI			='CGI';
+		const INTERFACE_HTTP 		='HTTP';
+		const INTERFACE_PHPUNIT		='PHPUNIT';
 		
-		public $applicationConfig	=	null;
-		public $configPointer		=	null;
-		public $config 				=	null;
-		public $request				=	null;
-		private $pluginLoader       =   null;
-		private $applicationLoader	=	null;
+		public $applicationConfig	=null;
+		public $configPointer		=null;
+		public $config 				=null;
+		public $request				=null;
+		private $pluginLoader       =  null;
+		private $applicationLoader	=null;
+		private $getHooks			=null;
 		
-		static $defaultConfig		=	null;
+		static $defaultConfig		=null;
 		static $applicationRegistry	=array();
 		
 		
@@ -433,6 +434,34 @@ namespace nutshell
 		public function getApplicationLoader()
 		{
 			return $this->applicationLoader;
+		}
+
+		/**
+		 * Registers a hook for calls on top of $this->*.
+		 * 
+		 * @access public
+		 * @param $ref - The reference to use to access the target. 
+		 * @param $callback - A callback function
+		 */
+		public function registerGetHook($ref,$callback)
+		{
+			$this->getHooks[$ref]=$callback;
+			return $this;
+		}
+
+		/**
+		 * Returns a pre-registered callback for get hooks.
+		 * 
+		 * @param $ref - The reference of the hook to get.
+		 * @return bool|\Closure
+		 */
+		public function getGetHook($ref)
+		{
+			if (isset($this->getHooks[$ref]))
+			{
+				return $this->getHooks[$ref];
+			}
+			return false;
 		}
 		
 		/*** OVERLOADING ***/
